@@ -33,11 +33,6 @@ public class SphereController : MonoBehaviour
     Vector3 forwardVector;
     Vector3 rightVector;
 
-    void Start()
-    {
-
-    }
-
     private void Update()
     {
         vertInput = Input.GetAxis("Vertical");
