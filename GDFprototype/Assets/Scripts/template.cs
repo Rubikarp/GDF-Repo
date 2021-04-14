@@ -4,9 +4,8 @@ public class template : MonoBehaviour
 {
     #region Variables
     [Header("Variable")]
-
+#pragma warning disable 0414
     [Space(10)]
-
     [SerializeField, Tooltip("c'est ma booléen")]
     private bool myBool = true;
 
@@ -24,6 +23,7 @@ public class template : MonoBehaviour
 
     [SerializeField, ColorUsage(true, false)]
     private Color myColor;
+#pragma warning restore 0414
 
     #endregion
 
@@ -32,7 +32,6 @@ public class template : MonoBehaviour
     [ContextMenu("MyMethode")]
     public void MyMethode()
     {
-        myInt = 1;
     }
 
     private void Awake()

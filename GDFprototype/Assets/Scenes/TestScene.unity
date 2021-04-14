@@ -421,12 +421,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 727047504}
   avatar: {fileID: 727047508}
+  camAngle: 0
+  handControl: 0
+  aimTarget: {fileID: 727047508}
   camDistance: 5
   camHeight: 2
-  handControl: 0
-  camAngle: 0
   maxSideAngle: 30
-  aimTarget: {fileID: 727047508}
   camAimOffSet: {x: 0, y: 0, z: 0}
   posLerpSpeed: 0.1
   lookLerpSpeed: 0.1
@@ -925,6 +925,7 @@ MonoBehaviour:
   layer:
     serializedVersion: 2
     m_Bits: 4294967295
+  movingForce: 15
 --- !u!135 &727047510
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1075,7 +1076,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 0.8
+  m_Time: 0.4
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1

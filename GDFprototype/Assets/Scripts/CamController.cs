@@ -2,21 +2,20 @@
 
 public class CamController : MonoBehaviour
 {
+    [Header("Components")]
     public Rigidbody rb = null;
     public Transform avatar = null;
-    public float camDistance = 5f;
-    public float camHeight = 0f;
-    [SerializeField] bool handControl;
+
+    [Header("Input")]
     [Range(-1, 1)] public float camAngle = 0f;
-    [Range(0, 180)] public float maxSideAngle = 30f;
 
-
+    [Header("Parameter")]
+    [SerializeField] bool handControl;
     public Transform aimTarget = null;
-    public Vector3 camAimOffSet = Vector3.zero;
 
-    public float posLerpSpeed = 0.02f;
-    public float lookLerpSpeed = 0.1f;
+    public CameraSettings settings = new CameraSettings(true);
 
+    [Header("Valeurs Tampon")]
     private Vector3 velDir = Vector3.one;
     private Vector3 wantedPos;
 
@@ -40,20 +39,20 @@ public class CamController : MonoBehaviour
 
     void FixedUpdate()
     {
-        float rotRad = (camAngle * maxSideAngle / 180) * Mathf.PI;
+        float rotRad = (camAngle * settings.maxSideAngle / 180) * Mathf.PI;
 
         wantedPos = avatar.position;
 
         Vector2 temp = Rotate(new Vector2(-velDir.x, -velDir.z), rotRad);
-        wantedPos += new Vector3(temp.x, 0, temp.y) * camDistance;
+        wantedPos += new Vector3(temp.x, 0, temp.y).normalized * settings.camDistance;
 
         //wantedPos += -velDir * camDistance;
-        wantedPos.y += camHeight;
+        wantedPos.y += settings.camHeight;
 
-        transform.position = Vector3.Lerp(transform.position, wantedPos, posLerpSpeed);
+        transform.position = Vector3.Lerp(transform.position, wantedPos, settings.posLerpSpeed);
 
         Quaternion look = Quaternion.LookRotation(avatar.position - transform.position);
-        transform.rotation = Quaternion.Slerp(transform.rotation, look, lookLerpSpeed);
+        transform.rotation = Quaternion.Slerp(transform.rotation, look, settings.lookLerpSpeed);
     }
 
     private Vector2 Rotate(Vector2 baseVect,float radian)
@@ -64,5 +63,29 @@ public class CamController : MonoBehaviour
         result.y = (baseVect.x * Mathf.Sin(radian)) + (baseVect.y * Mathf.Cos(radian));
 
         return result;
+    }
+}
+
+[System.Serializable]
+public struct CameraSettings
+{
+    public float camDistance;
+    public float camHeight;
+
+    [Range(0, 180)] 
+    public float maxSideAngle;
+
+    public Vector3 camAimOffSet;
+
+    public float posLerpSpeed;
+    public float lookLerpSpeed;
+    public CameraSettings(bool basic)
+    {
+        camDistance = 5f;
+        camHeight = 0f;
+        maxSideAngle = 30f;
+        camAimOffSet = Vector3.zero;
+        posLerpSpeed = 0.02f;
+        lookLerpSpeed = 0.1f;
     }
 }
