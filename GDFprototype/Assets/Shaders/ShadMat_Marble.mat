@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs_Thales_Sea
+  m_Name: ShadMat_Marble
   m_Shader: {fileID: -6465566751694194690, guid: 8a746b28344dbe64583c8026e5dcce4d,
     type: 3}
   m_ShaderKeywords: 

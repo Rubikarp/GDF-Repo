@@ -13,17 +13,31 @@ public class InputHandler : MonoBehaviour
     public static bool grip = false;
     public static bool slid = false;
 
+    [Header("Input Check")]
+    [SerializeField] float vertInput;
+    [SerializeField] float horiInput;
+    [Space(10)]
+    [SerializeField] float horiCamInput;
+    [Space(10)]
+    [SerializeField] bool jumpInput;
+    [Space(10)]
+    [SerializeField] bool slidInput;
+    [SerializeField] bool gripInput;
+
     void Update()
     {
         InputCollect();
+        ShowInput();
     }
     private void FixedUpdate()
     {
         InputCollect();
+        ShowInput();
     }
     private void LateUpdate()
     {
         InputCollect();
+        ShowInput();
     }
 
     private void InputCollect()
@@ -39,5 +53,16 @@ public class InputHandler : MonoBehaviour
         grip = Input.GetButton("Grip");
         slid = Input.GetButton("Slid");
         
+    }
+
+    void ShowInput()
+    {
+        vertInput = InputHandler.axisVertical;
+        horiInput = InputHandler.axisHorizontal;
+        jumpInput = InputHandler.bounce;
+        slidInput = InputHandler.slid;
+        gripInput = InputHandler.grip;
+
+        horiCamInput = InputHandler.axisCamera;
     }
 }
