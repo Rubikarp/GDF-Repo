@@ -16,6 +16,7 @@ public class MarbleController : MonoBehaviour
 
     public LayerMask layer;
     [SerializeField] bool touchingGround;
+    private bool canJump = true;
 
     [Header("Parameter")]
     [SerializeField] float movingForce = 20f;
@@ -104,10 +105,14 @@ public class MarbleController : MonoBehaviour
             #endregion
 
             //Jump
+            /*
             if (jumpInput)
             {
                 rb.AddForce(planNormal * jumpForce, ForceMode.Impulse);
+                canJump = false;
+                Invoke("JumpCD", 0.1f);
             }
+            */
         }
 
         //Adhésion
@@ -115,12 +120,17 @@ public class MarbleController : MonoBehaviour
         {
             phyMat.staticFriction = frictionOff;
             phyMat.dynamicFriction = frictionOff;
+
+            Physics.gravity = Vector3.down * 20;
         }
         else
         {
             phyMat.staticFriction = frictionOn;
             phyMat.dynamicFriction = frictionOn;
+
+            Physics.gravity = Vector3.down * 10;
         }
+
         //Bounciness
         if (jumpInput)
         {
@@ -133,14 +143,24 @@ public class MarbleController : MonoBehaviour
 
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        touchingGround = true;
+    }
     private void OnCollisionStay(Collision collision)
     {
         touchingGround = true;
-
     }
+
     private void OnCollisionExit(Collision collision)
     {
         touchingGround = false;
+        //rb.angularVelocity = rb.velocity;
 
+    }
+
+    public void JumpCD()
+    {
+        canJump = true;
     }
 }
