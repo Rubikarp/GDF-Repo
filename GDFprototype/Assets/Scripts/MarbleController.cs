@@ -37,6 +37,8 @@ public class MarbleController : MonoBehaviour
     [SerializeField] float horiInput;
 
     [SerializeField] bool jumpInput;
+    [SerializeField] bool bounceInput;
+    [SerializeField] bool gravityInput;
     [SerializeField] bool slidInput;
     [SerializeField] bool gripInput;
 
@@ -44,7 +46,6 @@ public class MarbleController : MonoBehaviour
     {
         GetInput();
         UpdateAndDebug();
-
     }
 
     #region UpdateMethode
@@ -52,7 +53,9 @@ public class MarbleController : MonoBehaviour
     {
         vertInput = InputHandler.axisVertical;
         horiInput = InputHandler.axisHorizontal;
-        jumpInput = InputHandler.bounce;
+        jumpInput = InputHandler.jump;
+        bounceInput = InputHandler.bounce;
+        gravityInput = InputHandler.gravity;
         slidInput = InputHandler.slid;
         gripInput = InputHandler.grip;
     }
@@ -81,14 +84,14 @@ public class MarbleController : MonoBehaviour
             if (gripInput)
             {
                 rb.maxAngularVelocity = movingForce;
-                if(rb.angularVelocity.magnitude > 10)
+                if(rb.angularVelocity.magnitude > 15)
                 {
-                    rb.angularVelocity = rb.angularVelocity.normalized * 10;
+                    rb.angularVelocity = rb.angularVelocity.normalized * 15;
                 }
             }
             else
             {
-                rb.maxAngularVelocity = movingForce *5;
+                rb.maxAngularVelocity = movingForce *8f;
             }
 
             if (gripInput)
@@ -105,14 +108,13 @@ public class MarbleController : MonoBehaviour
             #endregion
 
             //Jump
-            /*
             if (jumpInput)
             {
                 rb.AddForce(planNormal * jumpForce, ForceMode.Impulse);
                 canJump = false;
                 Invoke("JumpCD", 0.1f);
             }
-            */
+            
         }
 
         //Adhésion
@@ -120,8 +122,6 @@ public class MarbleController : MonoBehaviour
         {
             phyMat.staticFriction = frictionOff;
             phyMat.dynamicFriction = frictionOff;
-
-            Physics.gravity = Vector3.down * 20;
         }
         else
         {
@@ -131,8 +131,16 @@ public class MarbleController : MonoBehaviour
             Physics.gravity = Vector3.down * 10;
         }
 
+        if (gravityInput)
+        {
+            Physics.gravity = Vector3.down * 2 * 9.81f;
+        }
+        else
+        {
+            Physics.gravity = Vector3.down * 9.81f;
+        }
         //Bounciness
-        if (jumpInput)
+        if (bounceInput)
         {
             phyMat.bounciness = bounceOn;
         }

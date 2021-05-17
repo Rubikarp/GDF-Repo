@@ -9,6 +9,7 @@ public class InputHandler : MonoBehaviour
 
     public static bool jump = false;
     public static bool bounce = false;
+    public static bool gravity = false;
 
     public static bool grip = false;
     public static bool slid = false;
@@ -20,6 +21,7 @@ public class InputHandler : MonoBehaviour
     [SerializeField] float horiCamInput;
     [Space(10)]
     [SerializeField] bool jumpInput;
+    [SerializeField] bool bounceInput;
     [Space(10)]
     [SerializeField] bool slidInput;
     [SerializeField] bool gripInput;
@@ -47,8 +49,9 @@ public class InputHandler : MonoBehaviour
 
         axisCamera = Input.GetAxis("CameraAxis");
 
-        jump = Input.GetButtonDown("Jump");
-        bounce = Input.GetButton("Jump");
+        jump = Input.GetButton("Jump");
+        bounce = Input.GetButton("Bounce");
+        gravity = Input.GetButton("Gravity");
 
         grip = Input.GetButton("Grip");
         slid = Input.GetButton("Slid");
@@ -59,7 +62,8 @@ public class InputHandler : MonoBehaviour
     {
         vertInput = InputHandler.axisVertical;
         horiInput = InputHandler.axisHorizontal;
-        jumpInput = InputHandler.bounce;
+        jumpInput = InputHandler.jump;
+        bounceInput = InputHandler.bounce;
         slidInput = InputHandler.slid;
         gripInput = InputHandler.grip;
 
